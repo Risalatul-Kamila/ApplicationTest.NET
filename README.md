@@ -12,7 +12,7 @@ Gunakan kredensial berikut untuk login dan mengakses **Admin Dashboard**:
 ## Struktur Proyek
 
 - `/frontend` - Aplikasi React (Vite, TypeScript, Bootstrap)
-- `/backend`  - API Server (Express.js, TypeScript, SQLite, Prisma)
+- `/backend`  - API Server (Express.js, TypeScript, MySQL, Prisma)
 
 ## Cara Menjalankan Aplikasi Secara Lokal
 
