@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Untuk menggunakan PostgreSQL/MySQL, ubah provider di bawah ini:
+// provider = "postgresql" // atau "mysql"
+// Dan sesuaikan url di .env
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("USER") // "USER" or "ADMIN"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  biodata   Biodata?
+}
+
+model Biodata {
+  id                    Int          @id @default(autoincrement())
+  userId                Int          @unique
+  user                  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  posisiYangDilamar     String?
+  nama                  String?
+  noKtp                 String?
+  tempatLahir           String?
+  tanggalLahir          String?
+  jenisKelamin          String?
+  agama                 String?
+  golonganDarah         String?
+  status                String?
+  alamatKtp             String?
+  alamatTinggal         String?
+  email                 String?
+  noTelp                String?
+  orangTerdekat         String?
+  skill                 String?
+  bersediaDitempatkan   Boolean?
+  penghasilanDiharapkan String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  pendidikan Pendidikan[]
+  pelatihan  Pelatihan[]
+  pekerjaan  Pekerjaan[]
+}
+
+model Pendidikan {
+  id            Int     @id @default(autoincrement())
+  biodataId     Int
+  biodata       Biodata @relation(fields: [biodataId], references: [id], onDelete: Cascade)
+  jenjang       String?
+  namaInstitusi String?
+  jurusan       String?
+  tahunMasuk    String?
+  tahunLulus    String?
+  ipk           String?
+}
+
+model Pelatihan {
+  id          Int     @id @default(autoincrement())
+  biodataId   Int
+  biodata     Biodata @relation(fields: [biodataId], references: [id], onDelete: Cascade)
+  namaKursus    String?
+  penyelenggara String?
+  sertifikat    Boolean?
+  tahun         String?
+}
+
+model Pekerjaan {
+  id                 Int     @id @default(autoincrement())
+  biodataId          Int
+  biodata            Biodata @relation(fields: [biodataId], references: [id], onDelete: Cascade)
+  namaPerusahaan String?
+  posisi         String?
+  gaji           String?
+  tahunMasuk     String?
+  tahunKeluar    String?
+  alasanKeluar   String?
+}
