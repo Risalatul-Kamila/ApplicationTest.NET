@@ -75,6 +75,7 @@ export default function AdminDashboard() {
               <th>Nama</th>
               <th>Tempat & Tanggal Lahir</th>
               <th>Posisi Dilamar</th>
+              <th>Pendidikan Terakhir</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -84,6 +85,7 @@ export default function AdminDashboard() {
                 <td>{item.nama || '-'}</td>
                 <td>{item.tempatLahir ? `${item.tempatLahir}, ` : ''}{item.tanggalLahir || '-'}</td>
                 <td>{item.posisiYangDilamar || '-'}</td>
+                <td>{item.pendidikan && item.pendidikan.length > 0 ? item.pendidikan[item.pendidikan.length - 1].jenjang : '-'}</td>
                 <td>
                   <Button variant="info" size="sm" className="me-2 text-white" onClick={() => handleView(item)}>Edit</Button>
                   <Button variant="danger" size="sm" onClick={() => handleDelete(item.id)}>Hapus</Button>
@@ -91,7 +93,7 @@ export default function AdminDashboard() {
               </tr>
             ))}
             {biodataList.length === 0 && (
-              <tr><td colSpan={4} className="text-center">Tidak ada data ditemukan.</td></tr>
+              <tr><td colSpan={5} className="text-center">Tidak ada data ditemukan.</td></tr>
             )}
           </tbody>
         </Table>
