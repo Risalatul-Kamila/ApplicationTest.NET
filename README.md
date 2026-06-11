@@ -1,36 +1,16 @@
-# Biodata Calon Karyawan APP (PELINDO)
+# ApplicationTest.NET
+> Biodata Calon Karyawan APP (PELINDO)
 
-Aplikasi *Fullstack* untuk pendaftaran dan manajemen biodata calon karyawan. Dibuat menggunakan React (Vite) untuk Frontend dan Node.js (Express) dengan Prisma ORM untuk Backend.
+Aplikasi *Fullstack* untuk pendaftaran dan manajemen biodata calon karyawan. 
+
+## Struktur Proyek (Versi .NET)
+- `/Pelindo.API` - API Server (ASP.NET Core 8, EF Core, MySQL)
+- `/Pelindo.MVC` - Frontend Web (ASP.NET Core MVC 8, Bootstrap)
+- `/frontend` & `/backend` - (Versi Lama) React & Node.js
 
 ## Akses Admin (Untuk Keperluan Review HRD)
-
 Gunakan kredensial berikut untuk login dan mengakses **Admin Dashboard**:
-
-- **Email**: `admin.hrd@pelindo.com`
+- **Email**: `admin.hrd@pelindo.com` (atau email register pertama)
 - **Password**: `password123`
 
-## Struktur Proyek
-
-- `/frontend` - Aplikasi React (Vite, TypeScript, Bootstrap)
-- `/backend`  - API Server (Express.js, TypeScript, MySQL, Prisma)
-
-## Cara Menjalankan Aplikasi Secara Lokal
-
-### 1. Menjalankan Backend
-Buka terminal baru, masuk ke direktori `backend`, lalu jalankan:
-```bash
-cd backend
-npm install
-npx prisma generate
-npm run dev
-```
-*Server backend akan berjalan di http://localhost:3001*
-
-### 2. Menjalankan Frontend
-Buka terminal baru, masuk ke direktori `frontend`, lalu jalankan:
-```bash
-cd frontend
-npm install
-npm run dev
-```
-*Aplikasi frontend akan terbuka di browser secara otomatis (biasanya di http://localhost:5173).*
+*(Catatan lengkap ada di file `dokumentasi_pelindo.md`)*
