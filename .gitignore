@@ -4,3 +4,11 @@ dist/
 backend/prisma/dev.db  
 frontend/node_modules/  
 backend/node_modules/ 
+
+# .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+appsettings.Development.json

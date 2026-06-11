@@ -1,0 +1,249 @@
+@model Pelindo.MVC.Models.BiodataViewModel
+@{
+    ViewData["Title"] = "Edit Data Pelamar";
+}
+
+<div class="card shadow-lg border-0 mb-5 animate-fade-in" style="border-radius: 16px;">
+    <div class="card-body p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <h2 style="color: var(--primary-navy); font-weight: 700;">EDIT DATA PELAMAR</h2>
+            <a asp-action="Index" class="btn btn-outline-secondary">Kembali</a>
+        </div>
+        
+        @if (TempData["Message"] != null)
+        {
+            var isSuccess = (bool)(TempData["IsSuccess"] ?? false);
+            <div class="alert @(isSuccess ? "alert-success" : "alert-danger")">@TempData["Message"]</div>
+        }
+
+        <form asp-action="Edit" asp-route-id="@Model.Id" method="post" id="biodataForm">
+            <!-- Same fields as Biodata Form -->
+            <div class="row mb-3">
+                <div class="col-md-6 form-group">
+                    <label asp-for="PosisiYangDilamar" class="form-label">Posisi Yang Dilamar</label>
+                    <input asp-for="PosisiYangDilamar" class="form-control" />
+                </div>
+                <div class="col-md-6 form-group">
+                    <label asp-for="Nama" class="form-label">Nama</label>
+                    <input asp-for="Nama" class="form-control" required />
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-4 form-group">
+                    <label asp-for="NoKtp" class="form-label">No. KTP</label>
+                    <input asp-for="NoKtp" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label asp-for="TempatLahir" class="form-label">Tempat Lahir</label>
+                    <input asp-for="TempatLahir" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label asp-for="TanggalLahir" class="form-label">Tanggal Lahir</label>
+                    <input asp-for="TanggalLahir" type="date" class="form-control" />
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-4 form-group">
+                    <label asp-for="JenisKelamin" class="form-label">Jenis Kelamin</label>
+                    <select asp-for="JenisKelamin" class="form-select">
+                        <option value="">Pilih...</option>
+                        <option value="LAKI-LAKI">LAKI-LAKI</option>
+                        <option value="PEREMPUAN">PEREMPUAN</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label asp-for="Agama" class="form-label">Agama</label>
+                    <input asp-for="Agama" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label asp-for="GolonganDarah" class="form-label">Golongan Darah</label>
+                    <input asp-for="GolonganDarah" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12 form-group">
+                    <label asp-for="Status" class="form-label">Status</label>
+                    <input asp-for="Status" class="form-control" />
+                </div>
+            </div>
+            
+            <div class="mb-3 form-group">
+                <label asp-for="AlamatKtp" class="form-label">Alamat KTP</label>
+                <textarea asp-for="AlamatKtp" rows="2" class="form-control"></textarea>
+            </div>
+            
+            <div class="mb-3 form-group">
+                <label asp-for="AlamatTinggal" class="form-label">Alamat Tinggal</label>
+                <textarea asp-for="AlamatTinggal" rows="2" class="form-control"></textarea>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-4 form-group">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" type="email" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label asp-for="NoTelp" class="form-label">No. Telp</label>
+                    <input asp-for="NoTelp" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label asp-for="OrangTerdekat" class="form-label">Orang Terdekat yg dapat dihubungi</label>
+                    <input asp-for="OrangTerdekat" class="form-control" />
+                </div>
+            </div>
+
+            <hr />
+            <h5>PENDIDIKAN TERAKHIR</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-sm" id="tablePendidikan">
+                    <thead>
+                        <tr class="bg-light">
+                            <th>Jenjang</th><th>Nama Institusi</th><th>Jurusan</th><th>Tahun Masuk</th><th>Tahun Lulus</th><th>IPK</th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Pendidikan.Count; i++)
+                        {
+                            <tr>
+                                <td><input name="Pendidikan[@i].Jenjang" value="@Model.Pendidikan[i].Jenjang" class="form-control" /></td>
+                                <td><input name="Pendidikan[@i].NamaInstitusi" value="@Model.Pendidikan[i].NamaInstitusi" class="form-control" /></td>
+                                <td><input name="Pendidikan[@i].Jurusan" value="@Model.Pendidikan[i].Jurusan" class="form-control" /></td>
+                                <td><input name="Pendidikan[@i].TahunMasuk" value="@Model.Pendidikan[i].TahunMasuk" class="form-control" /></td>
+                                <td><input name="Pendidikan[@i].TahunLulus" value="@Model.Pendidikan[i].TahunLulus" class="form-control" /></td>
+                                <td><input name="Pendidikan[@i].Ipk" value="@Model.Pendidikan[i].Ipk" class="form-control" /></td>
+                                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="addRow('Pendidikan', ['Jenjang','NamaInstitusi','Jurusan','TahunMasuk','TahunLulus','Ipk'])">+ Tambah Pendidikan</button>
+            
+            <hr class="mt-4" />
+            <h5>RIWAYAT PELATIHAN</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-sm" id="tablePelatihan">
+                    <thead>
+                        <tr class="bg-light">
+                            <th>Nama Kursus / Seminar</th><th>Penyelenggara</th><th>Sertifikat (Ada/Tidak)</th><th>Tahun</th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Pelatihan.Count; i++)
+                        {
+                            <tr>
+                                <td><input name="Pelatihan[@i].NamaKursus" value="@Model.Pelatihan[i].NamaKursus" class="form-control" /></td>
+                                <td><input name="Pelatihan[@i].Penyelenggara" value="@Model.Pelatihan[i].Penyelenggara" class="form-control" /></td>
+                                <td>
+                                    <select name="Pelatihan[@i].Sertifikat" class="form-select">
+                                        @if(Model.Pelatihan[i].Sertifikat == true) {
+                                            <option value="false">Tidak</option><option value="true" selected>Ada</option>
+                                        } else {
+                                            <option value="false" selected>Tidak</option><option value="true">Ada</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td><input name="Pelatihan[@i].Tahun" value="@Model.Pelatihan[i].Tahun" class="form-control" /></td>
+                                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="addRow('Pelatihan', ['NamaKursus','Penyelenggara','Sertifikat','Tahun'])">+ Tambah Pelatihan</button>
+
+            <hr class="mt-4" />
+            <h5>RIWAYAT PEKERJAAN</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-sm" id="tablePekerjaan">
+                    <thead>
+                        <tr class="bg-light">
+                            <th>Nama Perusahaan</th><th>Posisi</th><th>Gaji</th><th>Tahun Masuk</th><th>Tahun Keluar</th><th>Alasan Keluar</th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Pekerjaan.Count; i++)
+                        {
+                            <tr>
+                                <td><input name="Pekerjaan[@i].NamaPerusahaan" value="@Model.Pekerjaan[i].NamaPerusahaan" class="form-control" /></td>
+                                <td><input name="Pekerjaan[@i].Posisi" value="@Model.Pekerjaan[i].Posisi" class="form-control" /></td>
+                                <td><input name="Pekerjaan[@i].Gaji" value="@Model.Pekerjaan[i].Gaji" class="form-control" /></td>
+                                <td><input name="Pekerjaan[@i].TahunMasuk" value="@Model.Pekerjaan[i].TahunMasuk" class="form-control" /></td>
+                                <td><input name="Pekerjaan[@i].TahunKeluar" value="@Model.Pekerjaan[i].TahunKeluar" class="form-control" /></td>
+                                <td><input name="Pekerjaan[@i].AlasanKeluar" value="@Model.Pekerjaan[i].AlasanKeluar" class="form-control" /></td>
+                                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="addRow('Pekerjaan', ['NamaPerusahaan','Posisi','Gaji','TahunMasuk','TahunKeluar','AlasanKeluar'])">+ Tambah Pekerjaan</button>
+
+            <hr class="mt-4" />
+            <div class="mb-3 form-group">
+                <label asp-for="Skill" class="form-label">Skill</label>
+                <textarea asp-for="Skill" rows="3" class="form-control"></textarea>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input id="BersediaDitempatkan" name="BersediaDitempatkan" class="form-check-input" type="checkbox" value="true" @(Model.BersediaDitempatkan == true ? "checked" : "") />
+                <label class="form-check-label" for="BersediaDitempatkan">Bersedia ditempatkan di seluruh kantor perusahaan</label>
+            </div>
+
+            <div class="mb-4 form-group">
+                <label asp-for="PenghasilanDiharapkan" class="form-label">Penghasilan Yang Diharapkan / Bulan</label>
+                <input asp-for="PenghasilanDiharapkan" type="text" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mt-4 shadow-sm" style="padding: 1rem;">
+                Perbarui Biodata
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function removeRow(btn) {
+            $(btn).closest('tr').remove();
+            reindex();
+        }
+
+        function addRow(type, fields) {
+            var tbody = $('#table' + type + ' tbody');
+            var tr = $('<tr></tr>');
+            
+            for(var i = 0; i < fields.length; i++) {
+                var field = fields[i];
+                var td = $('<td></td>');
+                if (field === 'Sertifikat') {
+                    td.append('<select name="' + type + '[0].' + field + '" class="form-select"><option value="false">Tidak</option><option value="true">Ada</option></select>');
+                } else {
+                    td.append('<input name="' + type + '[0].' + field + '" class="form-control" />');
+                }
+                tr.append(td);
+            }
+            tr.append('<td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>');
+            tbody.append(tr);
+            reindex();
+        }
+
+        function reindex() {
+            var types = ['Pendidikan', 'Pelatihan', 'Pekerjaan'];
+            types.forEach(function(type) {
+                $('#table' + type + ' tbody tr').each(function(index) {
+                    $(this).find('input, select').each(function() {
+                        var name = $(this).attr('name');
+                        if (name) {
+                            var newName = name.replace(/\[\d+\]/, '[' + index + ']');
+                            $(this).attr('name', newName);
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+}

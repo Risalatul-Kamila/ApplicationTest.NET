@@ -1,0 +1,48 @@
+@model Pelindo.MVC.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Pendaftaran Portal";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="auth-bg d-flex align-items-center justify-content-center" style="min-height: 100vh">
+        <div class="container animate-fade-in" style="max-width: 450px;">
+            <div class="card auth-card border-0">
+                <div class="card-body p-4 p-md-5">
+                    <h3 class="text-center mb-4" style="color: var(--primary-navy);">Pendaftaran Portal</h3>
+                    
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+
+                    <form asp-action="Register" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" type="email" required />
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" class="form-control" type="password" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Daftar Sekarang</button>
+                        <div class="text-center">
+                            Sudah punya akun? <a asp-action="Login">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

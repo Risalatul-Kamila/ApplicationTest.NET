@@ -1,0 +1,121 @@
+@model List<Pelindo.MVC.Models.BiodataViewModel>
+@{
+    ViewData["Title"] = "Dashboard Admin";
+}
+
+<div class="card shadow-lg border-0 mb-5 animate-fade-in" style="border-radius: 16px;">
+    <div class="card-body p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 style="color: var(--primary-navy); font-weight: 700;">Data Pelamar</h2>
+            @if (Model != null)
+            {
+                <span class="badge bg-primary rounded-pill px-3 py-2" style="font-size: 0.9rem;">
+                    Total: @Model.Count pelamar
+                </span>
+            }
+        </div>
+
+        @if (TempData["Message"] != null)
+        {
+            var isSuccess = (bool)(TempData["IsSuccess"] ?? false);
+            <div class="alert @(isSuccess ? "alert-success" : "alert-danger")">@TempData["Message"]</div>
+        }
+
+    
+        <div class="card border-0 bg-light rounded-3 p-4 mb-4">
+            <form method="get" asp-action="Index" id="formCari">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-9">
+                        <label class="form-label fw-semibold text-muted small">
+                            <i class="bi bi-search me-1"></i> Cari Pelamar
+                        </label>
+                        <input type="text"
+                               id="inputSearch"
+                               name="search"
+                               class="form-control"
+                               placeholder="Cari berdasarkan nama, posisi yang dilamar, atau tingkat pendidikan..."
+                               value="@ViewBag.Search" />
+                    </div>
+                    <div class="col-md-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1">
+                            <i class="bi bi-search me-1"></i> Cari
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset
+                        </a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nama</th>
+                        <th>Tempat, Tanggal Lahir</th>
+                        <th>Posisi yang Dilamar</th>
+                        <th>Pend. Terakhir</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            var pendidikanTerakhir = item.Pendidikan?.LastOrDefault();
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; font-weight: bold;">
+                                            @(item.Nama?.Substring(0, 1).ToUpper() ?? "?")
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0" style="color: var(--text-dark); font-weight: 600;">@item.Nama</h6>
+                                            <small class="text-muted">@item.Email</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@item.TempatLahir, @item.TanggalLahir</td>
+                                <td>
+                                    <span class="badge bg-primary rounded-pill px-3 py-2">@item.PosisiYangDilamar</span>
+                                </td>
+                                <td>
+                                    @if (pendidikanTerakhir != null)
+                                    {
+                                        <span class="badge bg-success rounded-pill px-3 py-2">@pendidikanTerakhir.Jenjang</span>
+                                        <small class="d-block text-muted mt-1">@pendidikanTerakhir.NamaInstitusi</small>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Detail / Edit</a>
+                                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger ms-1">Hapus</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                Tidak ada data pelamar yang sesuai filter
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
